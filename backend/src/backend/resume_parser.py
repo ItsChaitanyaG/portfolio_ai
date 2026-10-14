@@ -1,6 +1,8 @@
-from pydantic import Basemodel
-from client.py import client, MODEL
+from pydantic import BaseModel
+from backend.client import client, MODEL
 import json
+from pathlib import Path
+from pypdf import PdfReader
 
 class Experience(BaseModel):
     company:str | None = None
@@ -28,9 +30,9 @@ responce_format = {
 }
 
 # Reading Resume
-def read_resume(file_path):
+def read_resume(file_path: Path):
 
-    if file_path.lower().endswith(".pdf"):
+    if file_path.suffix.lower().endswith(".pdf"):
         reader = PdfReader(file_path)
 
         text = ''
@@ -38,7 +40,7 @@ def read_resume(file_path):
         for page in reader.pages:
             page_text = page.extract_text()
             if page_text:
-                text += page_text + "/n"
+                text += page_text + "\n"
             return text
     elif file_path.lower().endswith(".docx"):
         return Document(file_path)
@@ -51,8 +53,8 @@ def parse_resume(resume_text):
         raise ValueError("Resume Text not available...")
 
     system_prompt = f"""
-    Extract required information from resume strictly based on this schema in json : {schema_resume},
-    Schema for Experience in json : {schema_exp}
+    Extract required information from resume strictly based on this schema in json : {resume_schema},
+    Schema for Experience in json : {exp_schema}
     """
 
     user_prompt = f"""
@@ -71,7 +73,7 @@ def parse_resume(resume_text):
 
     messages = [system_message, user_message]
 
-    response = client.chat.completions.create(model=model, messages=messages, temperature=0, response_format=responce_format)
+    response = client.chat.completions.create(model=MODEL, messages=messages, temperature=0, response_format=responce_format)
 
     if not response:
         raise ValueError("Did not get resume response from client...")

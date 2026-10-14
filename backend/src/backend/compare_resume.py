@@ -1,4 +1,4 @@
-from client.py import client, MODEL 
+from client import client, MODEL 
 from pydantic import BaseModel
 import json
 
@@ -37,7 +37,7 @@ def match_resume(jd_json, resume_json):
 
     messages = [message]
 
-    response = client.chat.completions.create(model=model, messages=messages, temperature=0, response_format=response_format)
+    response = client.chat.completions.create(model=MODEL, messages=messages, temperature=0, response_format=response_format)
 
     final_score_json = json.loads(response.choices[0].message.content)
 

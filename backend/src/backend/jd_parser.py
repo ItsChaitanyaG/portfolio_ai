@@ -1,4 +1,4 @@
-from client.py import client, MODEL
+from client import client, MODEL
 from pydantic import BaseModel
 
 # models
@@ -41,7 +41,7 @@ def parse_jd(jd_text):
 
     messages = [system_message, user_message]
 
-    response = client.chat.completions.create(model=model, messages=messages, temperature=0, response_format=response_format)
+    response = client.chat.completions.create(model=MODEL, messages=messages, temperature=0, response_format=response_format)
 
     if not response:
         raise ValueError("Did not get jd response from client...")
