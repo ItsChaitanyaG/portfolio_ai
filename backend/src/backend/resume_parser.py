@@ -1,17 +1,6 @@
 from pydantic import Basemodel
-import os
-from groq import Groq
-from dotenv import load_dotenv
+from client.py import client, MODEL
 import json
-
-load_dotenv()
-
-my_api_key = os.getenv("GROQ_API_KEY")
-if not my_api_key:
-    raise ValueError("Api key not found...")
-
-client = Groq(api_key=my_api_key)
-model = "openai/gpt-oss-20b"
 
 class Experience(BaseModel):
     company:str | None = None
@@ -85,7 +74,7 @@ def parse_resume(resume_text):
     response = client.chat.completions.create(model=model, messages=messages, temperature=0, response_format=responce_format)
 
     if not response:
-        raise ValueError("Did not get response from client...")
+        raise ValueError("Did not get resume response from client...")
 
     resume_json = response.choices[0].message.content
 
