@@ -41,7 +41,7 @@ def read_resume(file_path: Path):
             page_text = page.extract_text()
             if page_text:
                 text += page_text + "\n"
-            return text
+        return text
     elif file_path.lower().endswith(".docx"):
         return Document(file_path)
     else:
