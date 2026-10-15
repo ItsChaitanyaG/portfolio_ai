@@ -3,8 +3,16 @@ from pathlib import Path
 from backend.resume_parser import read_resume, parse_resume
 from time import sleep
 from backend.user_query import ChatRequest, ask_llm
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"], 
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 resume_text = read_resume(Path("resume.pdf"))
 sleep(2)
