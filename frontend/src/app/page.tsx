@@ -1,16 +1,13 @@
 // app/page.tsx
+"use client";
+
 import Chat from "@/components/Chat";
+
 
 export default function Home() {
   return (
     <main
-      className="flex h-dvh flex-col items-center bg-[#111214] px-4 py-6 text-white"
-      style={{
-        backgroundImage: `
-          radial-gradient(circle at 50% 0%, rgba(157,255,79,0.18), transparent 45%),
-          linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px)`,
-        backgroundSize: "100% 100%, 90px 100%",
-      }}
+      className="flex min-h-0 w-full flex-1 flex-col items-center"
     >
       <div className="mb-5 text-center">
         <p className="text-xs font-semibold uppercase tracking-widest text-[#9dff4f]">
@@ -37,7 +34,6 @@ export default function Home() {
             </p>
           </div>
         </header>
-
         <Chat />
       </div>
     </main>
