@@ -1,9 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File
 from pathlib import Path
 from backend.resume_parser import read_resume, parse_resume
 from time import sleep
 from backend.user_query import ChatRequest, ask_llm
 from fastapi.middleware.cors import CORSMiddleware
+from backend.final_score import final_score
 
 app = FastAPI()
 
@@ -28,5 +29,13 @@ def root():
 @app.post("/chat")
 def chat(request: ChatRequest):
     response = ask_llm(request.question, resume_json)
+
+    return(response)
+
+@app.post("/score")
+async def checkScore(file: UploadFile = File(...)):
+    file_content = (await file.read()).decode("uft-8")
+
+    response = final_score(file_content, resume_json)
 
     return(response)
