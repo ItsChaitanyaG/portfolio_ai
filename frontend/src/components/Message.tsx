@@ -1,4 +1,5 @@
 import type { ChatMessage } from "@/types/chat";
+import ReactMarkdown from "react-markdown";
 
 const Message = ({ role, content, time }: ChatMessage) => {
     const isUser = role === "user";
@@ -15,24 +16,38 @@ const Message = ({ role, content, time }: ChatMessage) => {
 
     return (
         <div className={`flex items-end gap-2 ${isUser ? "justify-end" : "justify-start"}`}>
-        {!isUser && avatar}
+            {!isUser && avatar}
 
-        <div className={`flex max-w-[80%] flex-col ${isUser ? "items-end" : "items-start"}`}>
-            <div
-            className={`whitespace-pre-wrap rounded-xl border px-4 py-2.5 text-sm leading-relaxed ${
-                isUser
-                ? "border-[#9dff4f] bg-[#9dff4f]/10 text-white shadow-[0_0_20px_rgba(157,255,79,0.15)]"
-                : "border-white/10 bg-white/5 text-slate-200"
-            }`}
-            >
-            {content}
+            <div className={`flex max-w-[80%] flex-col ${isUser ? "items-end" : "items-start"}`}>
+                <div
+                    className={`rounded-xl border px-4 py-2.5 text-sm leading-relaxed ${
+                        isUser
+                            ? "whitespace-pre-wrap border-[#9dff4f] bg-[#9dff4f]/10 text-white shadow-[0_0_20px_rgba(157,255,79,0.15)]"
+                            : "border-white/10 bg-white/5 text-slate-200"
+                    }`}
+                >
+                    {isUser ? (
+                        content
+                    ) : (
+                        <div className="prose prose-invert prose-sm max-w-none prose-p:my-1 prose-ul:my-1 prose-ol:my-1 prose-a:text-[#9dff4f]">
+                            <ReactMarkdown
+                                components={{
+                                    a: (props) => (
+                                        <a {...props} target="_blank" rel="noopener noreferrer" />
+                                    ),
+                                }}
+                            >
+                                {content}
+                            </ReactMarkdown>
+                        </div>
+                    )}
+                </div>
+                {time && <span className="mt-1 text-[11px] text-white/40">{time}</span>}
             </div>
-            {time && <span className="mt-1 text-[11px] text-white/40">{time}</span>}
-        </div>
 
-        {isUser && avatar}
+            {isUser && avatar}
         </div>
     );
-    };
+};
 
 export default Message;

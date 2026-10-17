@@ -19,6 +19,7 @@ app.add_middleware(
 resume_text = read_resume(Path("resume.pdf"))
 sleep(2)
 resume_json = parse_resume(resume_text)
+other_info = Path("info.txt").read_text(encoding="utf-8")
 
 @app.get("/")
 def root():
@@ -29,7 +30,7 @@ def root():
 
 @app.post("/chat")
 def chat(request: ChatRequest):
-    response = ask_llm(request.question, resume_json)
+    response = ask_llm(request.question, resume_json, other_info)
 
     return(response)
 

@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import axios from "axios";
+import { useEffect } from "react";
 
 const tabs = [
     { href: "/", label: "About me" },
@@ -11,6 +13,14 @@ const tabs = [
 const Navbar = () => {
     const pathname = usePathname();
 
+    useEffect(()=>{
+        try {
+            axios.get(`${process.env.NEXT_PUBLIC_API_URL}/`)
+        } catch (error) {
+            console.log(error)
+        }
+    }, [])
+
     return (
         <nav className="flex justify-center px-4 py-4">
             <div className="flex gap-1 rounded-xl border border-white/10 bg-white/5 p-1">
@@ -18,7 +28,7 @@ const Navbar = () => {
                     <Link
                         key={m.href}
                         href={m.href}
-                        className={`rounded-lg px-4 py-1.5 text-sm font-semibold transition ${
+                        className={`flex items-center rounded-lg px-4 py-1.5 text-sm font-semibold transition ${
                             pathname === m.href
                                 ? "bg-[#9dff4f] text-black shadow-[0_0_16px_rgba(157,255,79,0.3)]"
                                 : "text-white/60 hover:text-white"

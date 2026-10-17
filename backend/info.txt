@@ -1,0 +1,61 @@
+# Chaitanya Gokhale
+
+Seeking: [Junior / Associate Full Stack Developer, MERN / PERN Stack Developer, Junior Backend Developer (Node.js / Python), Associate Software Engineer], [remote/hybrid]
+
+## Projects
+
+### Portfolio AI
+
+- What: chatbot answering questions about me + JD-to-resume match scorer
+- Why: interactive alternative to a static portfolio
+- Stack: Next.js, Tailwind, FastAPI, Groq
+- GitHub: github.com/ItsChaitanyaG/portfolio_ai
+Why Next.js + FastAPI: [Next.js to learn a modern React framework; FastAPI because Python suits LLM work]
+
+### themeDex
+
+- What: paste a GitHub repo URL of a Linux theme/dotfiles project, get a beginner-friendly step-by-step install guide
+- How: FastAPI analyzer reads the repo's README and install scripts via GitHub API, so the LLM works from real repo data instead of guessing
+- Backend: Express orchestrates analyzer and Groq LLM, central error handling
+- Output: Markdown guide rendered in React
+- Stack: React, Express, FastAPI, Groq
+- Status: in progress
+- Why: help beginners understand theme/dotfiles repos and install them with easy steps
+- Hardest part: giving the LLM the actual README and script content so it wouldn't hallucinate
+- GitHub: github.com/ItsChaitanyaG/themeDex
+- Live: [Not deployed yet]
+
+### NeoBank (MCA capstone)
+
+- What: digital banking web app with separate customer and admin sides
+- Customer: registration, KYC upload, Savings/Current accounts, beneficiaries, deposits, withdrawals, transfers, history
+- Admin: approve/reject KYC, search customers and transactions
+- Rules enforced in backend: KYC before account, per-transaction limits, balance and beneficiary checks, DB transactions for consistency
+- Security: JWT, bcrypt, protected routes, role-based access, server-side validation
+- AI: Groq LLM generates spending insights from user transactions
+- Stack: React, Tailwind, Node.js, Express, Prisma, PostgreSQL, Cloudinary
+- Hardest part: [one line, e.g. keeping transfers consistent]
+- GitHub: github.com/ItsChaitanyaG/BankingAppCapstone
+- Live: banking-app-capstone.vercel.app
+
+## FAQ
+Strengths: [
+    - End-to-end builder: NeoBank covers UI, API, database, auth, admin panel and AI insights
+    - Backend correctness: NeoBank enforces KYC, limits and balance checks, with DB transactions for consistency
+    - Grounded LLM features: themeDex gives the LLM real README/script data, this portfolio gives it resume data, so answers don't hallucinate
+    - Works across stacks: Node/Express + PostgreSQL/MongoDB, and Python/FastAPI services
+]
+
+Weaknesses: [
+    - DSA problem solving: still practicing patterns (e.g. [two pointers, sliding window, binary search]); solving problems regularly to build speed
+    - Nervous when observed (live coding, interviews): [practicing answering aloud]
+    - Recalling syntax and API names from memory: I rely on docs and my own notes
+]
+
+Why did you move from B.Com to development: [always liked computers. My B.Com had programming courses (Python, MySQL, MongoDB) where I performed well. My professor suggested MCA as a path to switch, so I chose Full Stack Development as my specialization]
+Availability / joining: [Immidiate]
+Location / relocation: open to relocation and remote
+Preferred stack: [MERN stack]
+Solo or team projects: [All projects solo]
+How do you use AI tools while coding: [your honest answer]
+What are you learning now: [Next.js, TypeScript]
