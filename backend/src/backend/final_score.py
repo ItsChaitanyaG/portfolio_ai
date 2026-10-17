@@ -1,5 +1,6 @@
 from backend.client import client, MODEL
 from pydantic import BaseModel
+import json
 
 class MatchResult(BaseModel):
     score: float
@@ -34,7 +35,7 @@ def final_score(jd_text, resume_json):
 
     messages = [message]
 
-    response = client.chat.completions.create(model=model, messages=messages, temperature=0, response_format=response_format)
+    response = client.chat.completions.create(model=MODEL, messages=messages, temperature=0, response_format=response_format)
 
     final_score_json = json.loads(response.choices[0].message.content)
 

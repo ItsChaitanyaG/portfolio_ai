@@ -21,6 +21,7 @@ class Resume(BaseModel):
     skills:list[str] = []
     experiences:list[Experience] = []
     projects:list[str] = []
+    education: list[str] = []
     certifications:list[str] = []
 
 resume_schema = Resume.model_json_schema()
