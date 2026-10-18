@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, Request
 from pathlib import Path
 from backend.resume_parser import read_resume, parse_resume
 from time import sleep
@@ -6,8 +6,16 @@ from backend.user_query import ChatRequest, ask_llm
 from fastapi.middleware.cors import CORSMiddleware
 from backend.final_score import final_score
 from fastapi.responses import FileResponse
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+
+limiter = Limiter(key_func=get_remote_address)
 
 app = FastAPI()
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
@@ -29,13 +37,15 @@ def root():
     }
 
 @app.post("/chat")
-def chat(request: ChatRequest):
-    response = ask_llm(request.question, resume_json, other_info)
+@limiter.limit("10/minute;100/day")
+def chat(request: Request, body: ChatRequest):
+    response = ask_llm(body.question, resume_json, other_info)
 
     return(response)
 
 @app.post("/score")
-async def checkScore(file: UploadFile = File(...)):
+@limiter.limit("5/minute;40/day")
+async def checkScore(request: Request, file: UploadFile = File(...)):
     file_content = (await file.read()).decode("utf-8")
 
     response = final_score(file_content, resume_json)

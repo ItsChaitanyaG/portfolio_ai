@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from backend.resume_parser import Resume
 
 class ChatRequest(BaseModel):
-    question:str
+    question:str = Field(max_length=500)
 
 def ask_llm(user_query: str, resume: Resume, other_info: str):
     system_prompt = f"""

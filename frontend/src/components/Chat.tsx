@@ -24,15 +24,18 @@ const now = () =>
             question: text,
         });
         setMessages((m) => [...m, { role: "assistant", content: res.data, time: now() }]);
-        } catch {
-        setMessages((m) => [
-            ...m,
-            {
-            role: "assistant",
-            content: "Something went wrong, try again later...",
-            time: now(),
-            },
-        ]);
+        } catch(error) {
+            const tooMany = axios.isAxiosError(error) && error.response?.status === 429;
+            setMessages((m) => [
+                ...m,
+                {
+                    role: "assistant",
+                    content: tooMany
+                        ? "You're sending messages too fast. Please wait a minute and try again."
+                        : "Something went wrong, try again later...",
+                    time: now(),
+                },
+            ]);
         } finally {
         setLoading(false);
         }

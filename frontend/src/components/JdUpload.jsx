@@ -26,7 +26,12 @@ const JdUpload = () => {
             setResult(res.data);
         } catch (error) {
             const detail = error.response?.data?.detail;
+            const status = error.response?.status;
+
             setErr(typeof detail === "string" ? detail : "Something went wrong, try again later...");
+
+            if(status === 429) setErr("You're sending requests too fast. Please wait a minute and try again.")
+
         } finally {
             setLoading(false);
         }
