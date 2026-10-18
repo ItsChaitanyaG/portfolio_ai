@@ -1,5 +1,5 @@
 from backend.client import client, MODEL
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from backend.resume_parser import Resume
 
 class ChatRequest(BaseModel):

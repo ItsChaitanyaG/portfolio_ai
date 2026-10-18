@@ -1,6 +1,7 @@
 from fastapi import FastAPI, UploadFile, File, Request
 from pathlib import Path
 from backend.resume_parser import read_resume, parse_resume
+from backend.jd_parser import parse_jd
 from time import sleep
 from backend.user_query import ChatRequest, ask_llm
 from fastapi.middleware.cors import CORSMiddleware
@@ -47,6 +48,8 @@ def chat(request: Request, body: ChatRequest):
 @limiter.limit("5/minute;40/day")
 async def checkScore(request: Request, file: UploadFile = File(...)):
     file_content = (await file.read()).decode("utf-8")
+
+    jd_json = parse_jd(file_content)
 
     response = final_score(file_content, resume_json)
 

@@ -1,4 +1,4 @@
-from client import client, MODEL
+from backend.client import client, MODEL
 from pydantic import BaseModel
 
 # models

@@ -12,10 +12,10 @@ response_format = {
     "type": "json_object"
 }
 
-def final_score(jd_text, resume_json):
+def final_score(jd_json, resume_json):
     prompt=f"""
     You are an HR recruiter
-    Compare job description and resume. JD:{jd_text}, resume:{resume_json}
+    Compare job description and resume. JD:{jd_json}, resume:{resume_json}
 
     return json matching this schema : {match_result_schema}
 
